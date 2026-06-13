@@ -10,11 +10,11 @@ const JobSchema = new Schema(
     technicianId: {
       type: Schema.Types.ObjectId,
       ref: 'Technician',
-      required: true,
+      required: false,
     },
     status: {
       type: String,
-      enum: ['assigned', 'en_route', 'diagnosing', 'repairing', 'completed'],
+      enum: ['pending','assigned', 'en_route', 'diagnosing', 'repairing', 'completed'],
       default: 'assigned',
     },
     media: {
