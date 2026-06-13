@@ -1,26 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================
+   ArcticEdge: Disruptor Design System
+   Palette Ref: 08d9d6-252a34-ff2e63-eaeaea
+   ============================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --- Charcoal Scale (Structural Backgrounds) --- */
+  --color-charcoal-950: #1A1D24; /* Deepest shadow */
+  --color-charcoal-900: #252A34; /* Core Background */
+  --color-charcoal-800: #333A47; /* Elevated UI / Cards */
+  --color-charcoal-700: #424B5C; /* Hover states on dark */
+
+  /* --- Ice Aqua (Cooling, Tech Accents, Trust) --- */
+  --color-aqua-300: #3DFFF8;
+  --color-aqua-400: #08D9D6; /* Core Accent */
+  --color-aqua-500: #06B2B0;
+  --color-aqua-600: #048C8A;
+
+  /* --- Hyper-Coral (Primary CTA, Heat, Emergency) --- */
+  --color-coral-400: #FF4D7A; /* Hover / Glow */
+  --color-coral-500: #FF2E63; /* Core Action Button */
+  --color-coral-600: #D91C4D; /* Active / Pressed */
+
+  /* --- Clarity Scale (Typography) --- */
+  --color-offwhite-50: #FFFFFF;
+  --color-offwhite-100: #EAEAEA; /* Primary Text */
+  --color-offwhite-200: #D1D1D1; /* Secondary Text */
+  --color-offwhite-300: #A8A8A8; /* Muted Text */
+  --color-offwhite-400: #828282;
+
+  /* --- Standard Status (Optional fallbacks) --- */
+  --color-emerald-500: #10B981;
+  --color-amber-500: #F59E0B;
+
+  /* --- Carbon / Industrial Gray (Backgrounds) --- */
+  --color-carbon-950: #090A0B;
+  --color-carbon-900: #121417;
+  --color-carbon-800: #1F2227;
+
+  /* --- Arctic Blue (Primary Actions / Accents) --- */
+  --color-arctic-400: #479BFF;
+  --color-arctic-500: #0062FF;
+
+  /* --- Industrial Copper (Amber Fallback for Ratings) --- */
+  --color-copper-500: #FF5E00;
+
+  /* --- Signal Green (Verified / Success) --- */
+  --color-signal-500: #00A650;
+
+  /* --- Fonts --- */
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Custom Shadows --- */
+  --shadow-glow-aqua: 0 0 30px rgba(8, 217, 214, 0.15), 0 0 60px rgba(8, 217, 214, 0.05);
+  --shadow-glow-coral: 0 0 40px rgba(255, 46, 99, 0.25), 0 0 80px rgba(255, 46, 99, 0.15);
+  --shadow-depth: 0 25px 50px -12px rgba(26, 29, 36, 0.8); /* Darker charcoal shadow */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
+  --shadow-card-hover: 0 8px 40px rgba(8, 217, 214, 0.15), 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================
+   Base Styles
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  background: var(--color-charcoal-900);
+  color: var(--color-offwhite-100);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   Custom Utility Classes
+   ============================================ */
+
+/* Glassmorphism Card (Updated for Charcoal) */
+.glass {
+  background: rgba(51, 58, 71, 0.6); /* charcoal-800 */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(234, 234, 234, 0.08); /* offwhite-100 */
+}
+
+.glass-light {
+  background: rgba(51, 58, 71, 0.3); /* charcoal-800 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(234, 234, 234, 0.04);
+}
+
+/* Glow border effect (Now uses Aqua to Coral gradient) */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(8, 217, 214, 0.5), rgba(255, 46, 99, 0.2), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Aqua gradient text */
+.text-gradient-aqua {
+  background: linear-gradient(135deg, #3DFFF8, #08D9D6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero gradient background (Charcoal depth) */
+.bg-hero-gradient {
+  background: linear-gradient(
+    180deg,
+    #1A1D24 0%,
+    #252A34 40%,
+    #1A1D24 100%
+  );
+}
+
+/* Radial gradient glow (Subtle Aqua behind components) */
+.bg-radial-glow {
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(8, 217, 214, 0.08) 0%,
+    transparent 70%
+  );
+}
+
+/* Primary Hyper-Coral CTA Button */
+.btn-glow {
+  background: linear-gradient(135deg, #FF4D7A, #FF2E63);
+  color: #FFFFFF;
+  box-shadow: 0 0 20px rgba(255, 46, 99, 0.4), 0 0 40px rgba(255, 46, 99, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 46, 99, 0.6), 0 0 60px rgba(255, 46, 99, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Pulse animation for the Coral CTA */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 46, 99, 0.4), 0 0 40px rgba(255, 46, 99, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 46, 99, 0.6), 0 0 60px rgba(255, 46, 99, 0.3);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Grid pattern overlay (Updated opacity for Charcoal bg) */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(234, 234, 234, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 234, 234, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Scrollbar styling (Charcoal theme) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1D24;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424B5C;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #08D9D6; /* Fun hover effect using the Aqua */
+}
+
+/* Selection color (Aqua highlight) */
+::selection {
+  background: rgba(8, 217, 214, 0.4);
+  color: #FFFFFF;
 }
