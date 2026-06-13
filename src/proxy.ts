@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { verifyAccessToken } from '@/lib/auth';
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/jobs/:path*', '/api/bookings/:path*'],
+  matcher: ['/admin/:path*', '/api/jobs/:path*'],
 };
 
 export async function proxy(request: NextRequest) {
